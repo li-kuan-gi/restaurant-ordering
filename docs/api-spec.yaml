@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: Restaurant Ordering System API
+  version: 1.0.0
+paths:
+  /menu:
+    get:
+      summary: Get the menu
+      responses:
+        200:
+          description: A list of menu items.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItem'
+  /orders:
+    post:
+      summary: Create a new order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        201:
+          description: Order created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderConfirmation'
+    get:
+      summary: Get a list of orders
+      responses:
+        200:
+          description: A list of orders.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+
+components:
+  schemas:
+    MenuItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        total:
+          type: number
+          format: float
+        status:
+          type: string
+    OrderItem:
+      type: object
+      properties:
+        menuItemId:
+          type: integer
+        quantity:
+          type: integer
+    OrderConfirmation:
+      type: object
+      properties:
+        orderId:
+          type: integer
+        message:
+          type: string
