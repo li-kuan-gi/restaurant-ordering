@@ -3,7 +3,7 @@ info:
   title: Restaurant Ordering System API
   version: 1.0.0
 paths:
-  /menu:
+  /api/menu:
     get:
       summary: Get the menu
       responses:
@@ -15,7 +15,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MenuItem'
-  /orders:
+  /api/orders:
     post:
       summary: Create a new order
       requestBody:
