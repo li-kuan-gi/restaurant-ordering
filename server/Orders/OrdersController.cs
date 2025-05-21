@@ -3,7 +3,7 @@ namespace Server.Orders;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/orders")]
 public class OrdersController(ILogger<OrdersController> logger) : ControllerBase
 {
     private readonly ILogger<OrdersController> _logger = logger;
