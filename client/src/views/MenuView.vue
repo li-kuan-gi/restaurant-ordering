@@ -6,6 +6,7 @@
     <ul v-if="menuItems.length">
       <li v-for="item in menuItems" :key="item.id">
         {{ item.name }} - ${{ item.price }}
+        <button @click="addToCart(item)" class="btn btn-primary btn-sm">加入購物車</button>
       </li>
     </ul>
     <p v-if="!loading && !error && !menuItems.length">No menu items found.</p>
@@ -14,10 +15,13 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useCartStore } from '../stores/cart'; // 引入購物車 Store
 
 const menuItems = ref([]);
 const loading = ref(true);
 const error = ref(null);
+
+const cartStore = useCartStore(); // 獲取購物車 Store 實例
 
 // 使用 fetch API 獲取菜單數據
 const fetchMenu = async () => {
@@ -36,7 +40,12 @@ const fetchMenu = async () => {
   }
 };
 
-// 在組件掛載後調用 fetchMenu 函數
+// 將品項添加到購物車
+const addToCart = (menuItem) => {
+  cartStore.addItem(menuItem); // 調用購物車 Store 的 addItem action
+  console.log('Added to cart:', menuItem.name);
+};
+
 onMounted(() => {
   fetchMenu();
 });
